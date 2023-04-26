@@ -11,16 +11,5 @@ if response.status_code == 200:
     # Получаем координаты из ответа метода "обратного геокодирования"
     pos = response.json()["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]["Point"]["pos"]
     lon, lat = map(float, pos.split())
-
-    # Ищем ближайший магазин по заданным координатам
-    params = {"apikey": API_KEY, "ll": f"{lon},{lat}", "type": "shop", "rspn": 1, "lang": "ru_RU"}
-    response = requests.get("https://search-maps.yandex.ru/v1/", params=params)
-
-    if response.status_code == 200:
-        # Выводим информацию о ближайшем магазине
-        result = response.json()["features"][0]
-        print(result["properties"]["name"], result["properties"]["description"])
-    else:
-        print("Ошибка запроса к Яндекс.Поиску")
-else:
-    print("Ошибка запроса к Яндекс.Геокодеру")
+re = requests.get("https://catalog.api.2gis.com/3.0/items?q=кафе&type=branch&point=37.416469%2C55.619325&radius=1000&key=rukpgh0564")
+print(re.json())

@@ -15,10 +15,13 @@ class av_parser():
         WebDriverWait(self.driver, timeout=10).until(presence_of_element_located((By.XPATH, ".//div[@class=\'product catalog-products_list_item\']")))
         self.page_source = self.driver.page_source
         self.soup = bs(self.page_source, "lxml")
-        for i in self.soup.find_all("div", class_="product catalog-products_list_item"):
-            self.name = i.find("a", title=True)["title"]
+        with open("test.html", 'w', encoding='utf-8') as file:
+            file.write(self.page_source)
+        for i in self.soup.find_all(attrs={'data-v-ac17228c class': 'product-info'}):
+            print(i)
+            self.name = i.find("a", class_="text product-info_name-container text--type-text text--font-inherit").text
             self.price = i.find("div", class_="price product-price_current-price").text
-            return self.name, self.price
+            print(self.name, self.price)
 
     def close(self):
         self.driver.close()
